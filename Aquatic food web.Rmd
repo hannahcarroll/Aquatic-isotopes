@@ -1,0 +1,68 @@
+---
+title: "Aquatic Food Web Analysis"
+author: "Hannah M. Carroll and Derek D. Houston"
+date: "April 17th, 2019"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+This is an R Notebook, which is written in RMarkdown format. Code is run inline and the output appears directly below it.
+
+Today's exercise will walk you through analysis of your aquatic isotope data and show you how to build a food web.
+
+---
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+# Sets the working directory to the folder in which this document is located
+
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+# (1pt) Write the command getwd() on the line below and run it to find out what your working directory is.
+
+
+```
+
+---
+
+We will start by loading required packages
+
+```{r}
+
+packages <- c("readxl", "ggplot2", "cluster", "factoextra", "tRophicPosition", "viridis") # Make a list of required packages
+
+# (1pt) How many packages are in our list?
+
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])] # Which ones haven't been installed yet?
+
+# (1pt) What new packages are we installing?
+
+if(length(new.packages)) install.packages(new.packages) # Install any that are missing
+
+# 
+lapply(packages, library, character.only = TRUE) # Load packages into memory for use
+
+```
+
+Now, read in your dataset
+
+```{r}
+
+isotope.data <- read_excel("2019_EA_Houston_class project.xlsx")
+
+```
+
+Next, make a simple dual isotope plot of your data
+
+```{r}
+
+ggplot(data=isotope.data, aes(x=`corrected d13C (VPDB)`, y=`corrected d15N (Air)`, color=Trophic)) + geom_point() +
+  geom_text(aes(label=ID, hjust=0.5), check_overlap = FALSE, hjust = 0, nudge_x = 0.05) +
+  scale_color_viridis_d(name="Trophic Position", breaks=c("Apex", "Sec Consumer", "Herbivore", "Detritivore",
+                                                          "HerbivoreDetritivore", "Primary Producer", "Detritus")) + theme_bw()
+
+```
+
+
