@@ -1,0 +1,65 @@
+---
+title: "Isotope Mixing Model Instructor Key"
+author: "Hannah M Carroll and Derek D Houston"
+date: "June 30, 2019"
+output: word_document
+
+---
+
+- This exercise will walk you through creating an isotope mixing model from the data we worked with in the food web exercise.
+```{r}
+library(dplyr)
+library(simmr)
+```
+
+
+```{r}
+
+mix <- as.matrix(iso.data.clean2[-17,5:6])
+
+class(mix)
+
+```
+
+```{r}
+colnames(mix) = c('d13C','d15N')
+```
+
+
+```{r}
+s_means <- as.matrix(iso.data.clean2[-17,c(3,5:6)] %>%
+  group_by(ID) %>%
+  summarize_all(.funs = c(mean="mean")))
+
+
+```
+
+```{r}
+s_names <- s_means[,1]
+
+```
+
+```{r}
+s_sds <- as.matrix(iso.data.clean2[-17,c(3,5:6)] %>%
+  group_by(ID) %>%
+  summarize_all(.funs = c(sd="sd")))
+```
+
+
+```{r}
+
+
+conc <- as.matrix(iso.data.clean2[-17,c(3,7:8)] %>%
+  group_by(ID) %>%
+  summarize_all(.funs = c(mean="mean")))
+
+```
+
+```{r}
+simmr_in = simmr_load(mixtures=mix,
+                     source_names=s_names,
+                     source_means=s_means,
+                     source_sds=s_sds,
+                     concentration_means = conc)
+```
+
