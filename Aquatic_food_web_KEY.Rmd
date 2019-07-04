@@ -10,12 +10,12 @@ output: word_document
 
 - Today's exercise will walk you through analysis of your aquatic isotope data and show you how to build a food web.
 
-- When typing into an R Notebook, you don't need to use # to mark text as a comment, unless you're in an code chunk.
+- When typing into an R Notebook, you don't need to use # to mark text as a comment, unless you're in a code chunk.
 
 ---
 
 
-NOTE: WHEN YOU ARE DONE WITH THIS EXERCISE, KNIT THIS TO FILE TO WORD AND SUBMIT VIA BLACKBOARD
+NOTE: WHEN YOU ARE DONE WITH THIS EXERCISE, KNIT THIS FILE TO WORD AND SUBMIT VIA BLACKBOARD
 
 Your name:
 
@@ -166,6 +166,13 @@ iso.data.clean2 <- isotope.data[isotope.data$`corrected d15N (Air)` < 18,]
 # iso.data.clean2 <- isotope.data[isotope.data$`corrected d15N (Air)` < 18,]
   
 ```
+(
+Write our clean data to file so we can use it later easily:
+```{r}
+write.csv(file="isodataclean2.csv", iso.data.clean2, row.names = FALSE)
+
+```
+
 
 ```{r}
 # Now plot the histogram:

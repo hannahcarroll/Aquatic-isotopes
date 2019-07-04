@@ -253,13 +253,19 @@ compare_sources(trout.simmr.out)
 
 ---
 
-(25 points total)
 Now you will use everything we've done above to create an estimate of diet for the leech.
 
 Remember that R code needs to be inserted into code chunks. Use *Ctrl+Alt+I* to insert a chunk on a Windows machine, or *Command+Alt+I* on a Mac.
 
-- You can use all the code we wrote above, changing the column indexes and object names estimate diet for the leech instead of the trout
+---
+
+- You can reuse all the code we wrote above, changing the column indexes and object names estimate diet for the leech instead of the trout
 - Don't forget that you can use View(iso.data.clean2) (capital V!) at any time to see your dataset as a spreadsheet.
+
+---
+
+(25 points total)
+
 
 (2pts) Create the mix object for the leech
 
@@ -296,3 +302,4 @@ Remember that R code needs to be inserted into code chunks. Use *Ctrl+Alt+I* to 
 
 (5pts) We assumed that this leech was parasitic when we initially collected it. Were those assumptions correct? What makes up the greatest proportion of the leech's diet? Is it free-living or parasitic?
 
+---
