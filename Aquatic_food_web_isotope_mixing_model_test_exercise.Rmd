@@ -78,7 +78,7 @@ trout.mix <- as.matrix(iso.data.clean2[17, 5:6])
 # Leaving a blank either before or after the comma means you want to include all rows/columns.
 
 #(1pt) On the line below, call row 12, all columns of the iso.data.clean2 dataset, without assigning it to an object
-iso.data.clean2[12,]
+
 
 ```
 
@@ -91,7 +91,7 @@ Now we'll set column names of our trout.mix matrix
 colnames(trout.mix) <- c("d13C", "d15N")
 
 # (1pt) trout.mix is a small matrix. Call it by name on the line below to look at the data.
-trout.mix
+
 
 ```
 
@@ -185,7 +185,7 @@ conc2 <- conc[c(1, 5:7), 2:3]
 conc3 <- apply(conc2, 2, as.numeric) 
 
 # (1pt) On the line below, use the command dim(name) to find out what the dimensions of conc3 are
-dim(conc3)
+
 
 ```
 
@@ -201,7 +201,7 @@ trout.simmr.in = simmr_load(mixtures=trout.mix,
                      concentration_means = conc3)
 
 # (1pt) What is the class of trout.simmr.in? Write the command to find the class on the line below and execute the code.
-class(trout.simmr.in)
+
 
 ```
 
