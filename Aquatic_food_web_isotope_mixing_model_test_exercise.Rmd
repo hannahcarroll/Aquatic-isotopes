@@ -199,7 +199,7 @@ source.means2 <- source.means[c(1,5:7), -1]
 
 ```{r}
 
-# (1pt) Check that the conversion to matrix format worked by asking R for the class of the source.means3 object on the line below. Remember, the command for this is class(object.name).
+# (1pt) Check that the conversion to matrix format worked by asking R for the class of the source.means3 object on the line below. Remember, the command for this is class(objectname).
 
 
 ```
@@ -210,7 +210,7 @@ We now need to get the names (ID) of the trout's potential food sources. This is
 ```{r}
 # The source names object needs to be a vector for simmr to read it. A vector is a one-dimensional array which holds only one type of data (numeric, character, factor, etc.). Ours will be a character vector containing the IDs of the trout's food sources.
 
-# We will subset the source.means object to get just the rows and column we need, dropping those for which we have only one observation
+# We will start by subsetting the source.means object to get just the rows and column we need, dropping those for which we have only one observation
 source.names <- source.means[c(1,5:7), 1]
 
 # (2pts) On the line below, write an explanation of what the code on the line above is doing:
@@ -220,6 +220,7 @@ source.names <- source.means[c(1,5:7), 1]
 
 
 ```{r}
+
 # Now we can ask for just the four IDs we need, dropping any row information (remember that this must be one-dimensional). We convert this to a vector with the as.vector command.
 source.names2 <- as.vector(source.names$ID)
 
@@ -255,27 +256,31 @@ The next step is to drop the ID column from our matrix.
 ```{r}
 
 source.sds2 <- source.sds[c(1, 5:7), 2:3]
+
 # (2pts) On the line below, write an explanation in your own words of what the code on the line above is doing. Remember, this is the same thing we did for source.means.
 #
 
 ```
 
+---
+
 The *apply* function will apply a function that you specify over the margins (rows or columns) of a matrix or vector.
 ```{r}
 
 # A matrix can only contain one data type (character, numeric, factor, etc.). Because we converted our data frame to a matrix without removing the ID column first (character), it recoded all of our variables to character. We now need to convert the data type of both variables to numeric.
+
 source.sds3 <- apply(source.sds2, 2, as.numeric) # This line is applying the as.numeric function to the columns (1 for rows, or 2 for columns) of the source.sds2 matrix.
 
-
-# (2pts) What is the class of the source.sds3 object? Why do we need it to be this class? Remember that you can find the class using the command class(objectname)
+# (2pts) What is the class of the source.sds3 object? Why do we need it to be this class? Remember that you can find the class using the command class(objectname).
 
 
 ```
 
 ---
 
-- Simmr lets us include the % carbon and nitrogen of the potential food sources' tissues in our analyses as the *concentration*. This helps improve the robustness of our diet estimates. 
-- We will use the colummns for the carbon and nitrogen percentages of the trout's potential food sources as the concentration values.
+Simmr lets us include the % carbon and nitrogen of the potential food sources' tissues in our analyses as the *concentration*. This helps improve the robustness of our diet estimates. 
+
+We will use the colummns for the carbon and nitrogen percentages of the trout's potential food sources as the concentration values.
 ```{r}
 
 # This code is exactly what we used for the source.sds step, except that we are using columns 7 through 8 (carbon and nitrogen percentage) and calculating the mean. Remember, we are converting this to a matrix in the same step as doing the summary because it's more efficient.
@@ -370,14 +375,15 @@ compare_sources(trout.simmr.out)
 ```
 
 ---
+# Practice what you've learned #
 
-Now you will use everything we've done above to create an estimate of diet for the leech.
+Now you will use everything we've done above to create an estimate of diet for the leech. We assumed the leech was parasitic. You will create an isotope mixing model like the one we created above to check that assumption.
 
 Remember that R code needs to be inserted into code chunks. Use *Ctrl+Alt+I* to insert a chunk on a Windows machine, or *Command+Alt+I* on a Mac.
 
 ---
 
-- You can reuse all the code we wrote above, changing the column indexes and object names estimate diet for the leech instead of the trout
+- You can reuse all the code we wrote above, changing the column indexes and object names to estimate diet for the leech instead of the trout
 - Don't forget that you can use View(iso.data.clean2) (capital V!) at any time to see your dataset as a spreadsheet.
 
 ---
@@ -391,7 +397,7 @@ Remember that R code needs to be inserted into code chunks. Use *Ctrl+Alt+I* to 
 (1pt) Set the column names for the leech inside of a code chunk.
 
 
-(2pts) Create the source means object. Remember that you will need to do this in three steps and end up with numeric values in a matrix. Each of these steps needs to be in a code chunk.
+(2pts) Create the source means object. Remember that you will need to do this in three steps and end up with numeric values in a matrix. Each of these steps needs to be in a code chunk. Refer back to the source means step for the trout for a reminder of what to write.
 
 
 (2pts) Create the source names object from the ID column. Be sure to do this inside a code chunk.
@@ -419,5 +425,9 @@ Remember that R code needs to be inserted into code chunks. Use *Ctrl+Alt+I* to 
 
 
 (5pts) We assumed that this leech was parasitic when we initially collected it. Were those assumptions correct? What makes up the greatest proportion of the leech's diet? Is it free-living or parasitic?
+
+---
+
+When you are done with this exercise, knit the file to a Word document and submit via Blackboard!
 
 ---
