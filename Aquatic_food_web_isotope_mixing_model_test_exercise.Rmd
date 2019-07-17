@@ -315,7 +315,7 @@ Now we have all of the data we need to create the mixing model.
 The simmr_load command puts everything into the correct format for the mixing model.
 ```{r}
 
-trout.simmr.in = simmr_load(mixtures=trout.mix,
+trout.simmr.in = simmr_load(mixtures=trout.mix2,
                      source_names=source.names2,
                      source_means=source.means3,
                      source_sds=source.sds3,
