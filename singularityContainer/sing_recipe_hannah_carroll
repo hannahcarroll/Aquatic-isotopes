@@ -19,8 +19,9 @@ Include: yum
 	yum update -y
 
 	yum install -y git wget
+	yum install -y openssl-devel
 
-	yum install -y R-core-3.6.1
+	yum install -y R-core
 	yum install -y R-core-devel R-devel R-Rcpp R-Rcpp-devel
 
 	wget https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.2.1335-x86_64.rpm
