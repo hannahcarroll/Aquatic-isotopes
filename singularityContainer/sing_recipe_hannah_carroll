@@ -18,10 +18,11 @@ Include: yum
 	yum clean all && yum makecache
 	yum update -y
 
-	yum install -y git wget curl xml2 httr
-	yum install -y openssl-devel
+	yum install -y @"Development Tools"
 
-	yum install -y R-core
+	yum install -y git gcc-c++ sudo curl openblas wget openssl-devel curl-devel libxml2 libxml2-devel
+
+	yum install -y --setopt=tsflags= R-core
 	yum install -y R-core-devel R-devel R-Rcpp R-Rcpp-devel
 
 	wget https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.2.1335-x86_64.rpm
@@ -44,7 +45,11 @@ Include: yum
 # R packages
 	R --no-save <<EOL
 	install.packages("pkgbuild", repos="https://ftp.ussg.iu.edu/CRAN/")
+	install.packages("xml2", repos="https://ftp.ussg.iu.edu/CRAN/")
+	install.packages("roxygen2", repos="https://ftp.ussg.iu.edu/CRAN/")
 	install.packages("devtools", repos="https://ftp.ussg.iu.edu/CRAN/")
+
+	library(devtools)
 
 	devtools::install_github("tidyverse/ggplot2")
 #	install.packages("readxl", repos="https://github.com/tidyverse/readxl")
