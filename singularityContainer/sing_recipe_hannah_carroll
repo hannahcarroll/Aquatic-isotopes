@@ -1,0 +1,69 @@
+Bootstrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
+Include: yum
+
+%environment
+	LC_ALL="C"
+	export LC_ALL
+
+%post
+	yum update -y
+# install R
+## Turn off nodoc as that ruins R apparently
+#sed -i 's/tsflags=nodocs//g' /etc/yum.conf
+# or use --setopt=tsflags= to do it per invocation
+
+	yum install -y epel-release
+	yum clean all && yum makecache
+	yum update -y
+
+	yum install -y git wget
+
+	yum install -y R-core-3.6.1
+	yum install -y R-core-devel R-devel R-Rcpp R-Rcpp-devel
+
+	wget https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.2.1335-x86_64.rpm
+	yum install -y rstudio-server-rhel-1.2.1335-x86_64.rpm
+
+	wget https://download1.rstudio.org/desktop/centos7/x86_64/rstudio-1.2.1335-x86_64.rpm
+	yum install -y rstudio-1.2.1335-x86_64.rpm
+
+#	yum install -y libblas
+
+	wget http://download.opensuse.org/repositories/home:/cornell_vrdc/CentOS_7/x86_64/jags4-4.3.0-67.4.x86_64.rpm
+	yum localinstall -y jags4-4.3.0-67.4.x86_64.rpm
+	
+	wget http://download.opensuse.org/repositories/home:/cornell_vrdc/CentOS_7/x86_64/jags4-devel-4.3.0-67.4.x86_64.rpm
+	yum localinstall -y jags4-devel-4.3.0-67.4.x86_64.rpm
+
+	
+
+
+# R packages
+	R --no-save <<EOL
+	install.packages("pkgbuild", repos="https://ftp.ussg.iu.edu/CRAN/")
+	install.packages("devtools", repos="https://ftp.ussg.iu.edu/CRAN/")
+	install.packages("readxl", repos="https://github.com/tidyverse/readxl")
+	install.packages("ggplot2", repos="https://github.com/tidyverse/ggplot2")
+
+
+
+
+
+# We are setting up a normal user for access
+# Login: rstudio  Password: rstudio
+	useradd -c "RStudio Account" -u 500 -d /home/rstudio -s /bin/bash rstudio
+	echo "rstudio:rstudio" | /usr/sbin/chpasswd
+
+
+# Move systemd service file into place
+	cp /usr/lib/rstudio-server/extras/systemd/rstudio-server.service /lib/systemd/system/
+	systemctl enable rstudio-server
+
+
+%runscript
+	/usr/bin/rstudio "$@"
+
+%startscript
+	/usr/lib/rstudio-server/bin/rserver
