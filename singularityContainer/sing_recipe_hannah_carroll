@@ -54,11 +54,14 @@ Include: yum
 	devtools::install_github("tidyverse/ggplot2")
 #	install.packages("readxl", repos="https://github.com/tidyverse/readxl")
 #	install.packages("ggplot2", repos="https://github.com/tidyverse/ggplot2")
-
-
-
-
-
+        install.packages("cluster", repos="https://svn.r-project.org/R-packages/trunk/cluster")
+        install.packages("factoextra", repos="https://github.com/kassambara/factoextra")
+        install.packages("tRophicPosition", repos="https://github.com/clquezada/tRophicPosition")
+        install.packages("viridis", repos="https://github.com/sjmgarnier/viridis")
+        install.packages("rjags", repos="https://cran.rstudio.com") # Not sure about this
+	install.packages("simmr", repos="https://cran.rstudio.com") # Not sure about this
+	install.packages("dplyr", repos="https://github.com/tidyverse/dplyr")
+	
 # We are setting up a normal user for access
 # Login: rstudio  Password: rstudio
 	useradd -c "RStudio Account" -u 500 -d /home/rstudio -s /bin/bash rstudio
