@@ -55,6 +55,8 @@ Include: yum
 #	install.packages("readxl", repos="https://github.com/tidyverse/readxl")
 #	install.packages("ggplot2", repos="https://github.com/tidyverse/ggplot2")
 
+# This is a different format that I ran across. Would this potentially solve the problem?
+	install.packages("ggplot",repos="https://cran.rstudio.com/")
 
 
 
