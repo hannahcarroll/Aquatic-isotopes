@@ -1,7 +1,11 @@
 ---
-title: "Isotope Mixing Model Instructor Key"
+title: "Isotope Mixing Model Exercise"
 author: "Hannah M Carroll and Derek D Houston"
+<<<<<<< Updated upstream
 date: "June 30, 2019"
+=======
+date: "August 1st, 2019"
+>>>>>>> Stashed changes
 output: word_document
 
 ---
@@ -29,7 +33,13 @@ library(simmr)
 
 ---
 
+<<<<<<< Updated upstream
 Load the iso.data.clean2 dataset that we created in the Aquatic Food Web Exercise if it isn't already in your Global Environment. If it is in your Global Environment already, you can skip this step.
+=======
+Load the iso.data.clean2 dataset that we created in the Aquatic Food Web Exercise if it isn't already in your Global Environment (upper right window).
+
+If it is in your Global Environment already, you can skip this step.
+>>>>>>> Stashed changes
 ```{r}
 
 iso.data.clean2 <- read.csv("isodataclean2.csv", header=TRUE)
@@ -50,11 +60,21 @@ The first set of steps creates the model for trout.
 # View the help file for the simmr package:
 help("simmr")
 
+# After skimming the simmr helpfile, continue the exercise.
+
 ```
 
 ---
 
+<<<<<<< Updated upstream
 We will need to subset our data frame called iso.data.clean2 in several separate steps. You can open the data frame in spreadsheet form to view it easily. Leave it open in another tab as you work so that you can refer back. You can also view objects by clicking the small white icon to the right of the object name in the Global Environment.
+=======
+- We will need to subset our data frame called iso.data.clean2 in several separate steps. Subsetting means you are selecting a portion of your existing data and ignoring or removing the rest.
+
+- You can open the data frame in spreadsheet form to view it easily. 
+- Leave it open in another tab as you work so that you can refer back. 
+- You can also view objects by clicking the small white icon to the right of the object name in the Global Environment.
+>>>>>>> Stashed changes
 ```{r}
 View(iso.data.clean2)
 
@@ -72,10 +92,20 @@ In simmr, the *mix* is the organism or organisms for which we are examining diet
 
 # Create an object called trout.mix. Subset iso.data.clean2 to include only row 17 (the row containing the trout data), and columns 5 to 6 (d13C and d15N). Return these items in matrix form and assign them to the object trout.mix.
 
+<<<<<<< Updated upstream
 trout.mix <- as.matrix(iso.data.clean2[17, 5:6])
 # Note that you can quickly call a row or column in a data frame by indexing like this: dfname[row, column]
 # The square brackets are always used for indexing.
 # Leaving a blank either before or after the comma means you want to include all rows/columns.
+=======
+#(1pt) There are usually multiple ways to call data in R. Column indexing allows you to call any combination of rows and/or columns. On the line below, call row 12, and all columns of the iso.data.clean2 dataset, without assigning it to an object (i.e., without using <-). Remember, the form is df[row, column]
+
+
+```
+
+Now we will turn our trout.mix data frame into a matrix that simmr can use
+```{r}
+>>>>>>> Stashed changes
 
 #(1pt) On the line below, call row 12, all columns of the iso.data.clean2 dataset, without assigning it to an object
 
@@ -116,8 +146,15 @@ source.means <- as.matrix(iso.data.clean2[-17, c(3,5:6)] %>%
 # (1pt) Check that this step worked by asking R for the class of the source.means object on the line below:
 class(source.means)
 
+<<<<<<< Updated upstream
 # Some of our IDs have only one observation. We can't create a meaningful average for those, so we have to remove them. We have only one observation each for Amphipods (row 2), Caddisflies (row 3), Leeches (row 4), and Wood (row 8).
 # We also need to drop the ID column that we had used for grouping
+=======
+```{r}
+
+# Some of our IDs have only one observation. We can't create a meaningful average for those, so we have to remove them. We have only one observation each for Amphipods (row 2), Caddisflies (row 3), Leeches (row 4), and Wood (row 8). We will ignore those, and just use rows 1 and 5 through 7.
+# We also need to drop the ID column (column 1) that we had used for grouping. To drop a column, we put a minus sign before the column number.
+>>>>>>> Stashed changes
 source.means2 <- source.means[c(1,5:7), -1]
 
 # (2pts) On the line below write an explanation of what the code on line 121 is doing:
@@ -173,6 +210,25 @@ source.sds3 <- apply(source.sds2, 2 ,as.numeric)
 
 ---
 
+<<<<<<< Updated upstream
+=======
+The *apply* function will apply any other function that you specify over the margins (rows or columns) of a matrix or vector.
+```{r}
+
+# A matrix can only contain one data type (character, numeric, factor, etc.). Because we converted our data frame to a matrix without removing the ID column first (character), it recoded all of our variables to character. We now need to convert the data type of both variables to numeric.
+
+source.sds3 <- apply(source.sds2, 2, as.numeric) # This line is applying the as.numeric function to the columns (1 for rows, or 2 for columns) of the source.sds2 matrix.
+
+# (2pts) What is the class of the source.sds3 object? Remember that you can find the class using the command class(objectname).
+
+
+```
+
+---
+
+Simmr lets us include the % carbon and nitrogen of the potential food sources' tissues in our analyses as the *concentration*. This helps improve the robustness of our diet estimates. 
+
+>>>>>>> Stashed changes
 We will use the colummns for the carbon and nitrogen percentages of the trout's potential food sources as the concentration values.
 ```{r}
 

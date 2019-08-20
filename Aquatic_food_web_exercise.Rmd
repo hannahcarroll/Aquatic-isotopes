@@ -23,7 +23,7 @@ Your name:
 
 A code chunk is standalone code that runs within the window. Code chunks begin with ```{r} and end with ```
 
-Try executing this chunk by clicking the *Run* button (green right arrow) within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter* on a Windows machine, or *Command+Shift+Enter* on a Mac. 
+Try executing this chunk by clicking the *Run* button (green right arrow) within the chunk or by placing your cursor inside it and pressing *Ctrl+Enter* on a Windows machine, or *Command+Enter* on a Mac. 
 
 ```{r}
 
@@ -70,7 +70,7 @@ Now, read in your dataset
 
 isotope.data <- read_excel("2019_EA_Houston_class project.xlsx")
 
-# The dataset should now appear in your global environment (top right)
+# The dataset should now appear in your Global Environment (top right)
 
 # (1pt) How many observations are there?
 # 
