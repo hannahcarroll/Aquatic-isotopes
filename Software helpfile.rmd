@@ -1,7 +1,7 @@
 ---
-title: "Software Guide"
+title: "Software Helpfile"
 author: "Hannah M Carroll"
-date: "August 1, 2019"
+date: "September 12, 2019"
 output: word_document
 ---
 
@@ -13,7 +13,9 @@ The authors claim no affiliation with or authorship of any software package used
 
 ## Optional: Signularity Container
 
-A Singularity container is a self-contained OS image which will obtain all required software packages in the appropriate versions, and all R package dependencies (additional packages required by packages being installed by the user). It will also For most institutions, your IT department must implement the Singularity container. This is optional, but will install the recommended versions of JAGS and all R packages required for this exercise.
+The Singularity container provided with this module is a small, self-contained OS image which hosts all required software packages in the appropriate versions, and all R package dependencies (additional packages required by packages being installed by the user). It is operating system agnostic and ensures that each student and instructor is using exactly the same computing environment on which this exercise was developed and tested. For most institutions, your IT department must implement the Singularity container. This is optional, but eliminates concerns over compatibility.
+
+Find the Singularity user guide here: https://sylabs.io/guides/3.3/user-guide/ 
 
 ---
 
@@ -48,12 +50,12 @@ ggplot2 3.2.0
 
 ## Installation
 
-Each exercise contains code to install the R packages for that exercise. This may take a substantial amount of time. In particular, dplyr installation can take up to an hour or more on slow connections. If this is a concern, please ensure that dplyr has been pre-installed on each machine on which these exercises are to be used. The code will check for and skip intallation of any packages which are already installed.
+Each exercise contains code to install the R packages for that exercise. This may take a substantial amount of time. In particular, dplyr installation can take up to an hour or more on slow connections. If this is a concern, please ensure that dplyr has been pre-installed on each machine on which these exercises are to be used. The code will check for and skip installation of any packages which are already installed.
 
 ---
 ## Tested versions
 
-These exercises were tested on R versions 3.5.1 (Windows) and 3.6.2 (Windows and Mac), and RStudio versions 1.1.456 (Windows), using the package versions listed above as the minimum required. JAGS version 4.3.0 was tested on Windows and Mac.
+These exercises were tested on R versions 3.5.1 (Windows) and 3.6.2 (Windows and Mac), and RStudio versions 1.1.456 and 1.2.1335 (Windows), using the package versions listed above as the minimum required. JAGS version 4.3.0 was tested on Windows and Mac. Commands are written as simply as possible to ensure compatibility with future versions.
 
 ---
 
@@ -65,4 +67,4 @@ JAGS (Just Another Gibbs Sampler) is a standalone software program which was dev
 
 ## Contact information
 
-Bug reports or questions should be submitted to Hannah Carroll via e-mail at carroll.hannah.m@gmail.com or via Github at hannahmcarroll
+Bug reports should be submitted to Hannah Carroll via e-mail at carroll.hannah.m@gmail.com or via a GitHub issue report at the project repository: https://github.com/hannahcarroll/Aquatic-isotopes
