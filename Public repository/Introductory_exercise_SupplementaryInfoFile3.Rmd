@@ -1,0 +1,285 @@
+---
+title: "Aquatic Food Web Analysis"
+author: "Hannah M. Carroll and Derek D. Houston"
+date: "April 17th, 2019"
+output: word_document
+
+---
+
+- This is an R Notebook, which is written in RMarkdown format. Code is run inline in a code chunk, and the output appears directly below it.
+
+- Today's exercise will walk you through analysis of your aquatic isotope data and show you how to build a food web.
+
+- When typing into an R Notebook, you don't need to use # to mark text as a comment, unless you're in a code chunk.
+
+---
+
+
+NOTE: WHEN YOU ARE DONE WITH THIS EXERCISE, KNIT THIS FILE TO WORD AND SUBMIT VIA BLACKBOARD
+
+Your name:
+
+---
+
+A code chunk is standalone code that runs within the window. Code chunks begin with ```{r} and end with ```
+
+Try executing this chunk by clicking the *Run* button (green right arrow) within the chunk or by placing your cursor inside it and pressing *Ctrl+Enter* on a Windows machine, or *Command+Enter* on a Mac. 
+
+```{r}
+
+# This command returns the time and date
+Sys.time()
+
+```
+
+Set the working directory
+
+```{r}
+
+# Set your working directory by choosing Session from the menu at the top, then Set Working Directory -> To Source File Location
+
+# (1pt) Write the command getwd() on the line below and run it to find out what your working directory is.
+
+
+```
+
+
+We will start by loading required packages
+
+```{r}
+
+packages <- c("readxl", "ggplot2", "cluster", "factoextra", "tRophicPosition", "viridis") # Make a list of required packages
+
+# (1pt) How many packages are in our list?
+# 
+
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])] # Which ones haven't been installed yet?
+
+# (1pt) What new packages are we installing?
+# 
+
+if(length(new.packages)) install.packages(new.packages) # Install any that are missing
+
+lapply(packages, library, character.only = TRUE) # Load packages into memory for use
+
+```
+
+Now, read in your dataset
+
+```{r}
+
+isotope.data <- read_excel("2019_EA_Houston_class project.xlsx")
+
+# The dataset should now appear in your Global Environment (top right)
+
+# (1pt) How many observations are there?
+# 
+
+# (1pt) How many variables are there?
+# 
+
+```
+
+---
+
+Next, make a simple dual isotope plot of your data. Error bars are the reported instrumental error, and are plotted for both the x and y axes.
+
+```{r}
+
+ggplot(data=isotope.data, aes(x=`corrected d13C (VPDB)`, y=`corrected d15N (Air)`, color=Trophic)) + 
+  geom_errorbar(aes(ymin=(`corrected d15N (Air)`-0.09), ymax=(`corrected d15N (Air)`+0.09))) + 
+  geom_errorbarh(aes(xmin=(`corrected d13C (VPDB)`-0.11), xmax=(`corrected d13C (VPDB)`+0.11))) + 
+  geom_point() + theme_bw() +
+  geom_text(aes(label=ID, hjust=0.5), check_overlap = FALSE, hjust = 0, nudge_x = 0.2) + xlim(-30,-17) +
+  scale_color_viridis_d(name="Trophic Position", 
+                        breaks=c("Apex", "Sec Consumer", "Herbivore", "Detritivore", "HerbivoreDetritivore", "Primary Producer", "Detritus"))
+
+```
+
+(2pts) Describe what you see in the plot you just created. Which members of the community group together and which do not? Do you notice anything that doesn't seem to fit with the rest of the community?
+
+
+---
+
+Now we'll determine whether there are outliers in either d13C or d15N.
+
+```{r}
+
+hist(isotope.data$`corrected d13C (VPDB)`)
+
+# (1pt) Describe the distribution of our d13C data. Are they right skewed, left skewed, bimodal, or normally distributed?
+# 
+
+```
+
+---
+
+```{r}
+
+hist(isotope.data$`corrected d15N (Air)`)
+
+# (1pt) Describe the distribution of our d15N data. Are they right skewed, left skewed, bimodal, or normally distributed?
+# 
+
+```
+
+---
+
+We can tell from our histograms that some of the observations in our d15N dataset are true outliers. We need to remove those to complete our analyses.
+
+```{r}
+
+# The command below creates a new dataset by taking our original data and keeping only those rows where the value of d15N is less than 40. 
+
+iso.data.clean <- isotope.data[isotope.data$`corrected d15N (Air)` < 40,]
+
+# (1pt) Why was this chosen as the cutoff point?
+# 
+
+# (1pt) How many observations does our new dataset contain?
+# 
+
+# (1pt) How many variables?
+# 
+
+```
+
+```{r}
+
+# Now we plot the cleaned data:
+
+hist(iso.data.clean$`corrected d15N (Air)`)
+
+```
+
+It looks a lot better. However, we still have one outlier. 
+
+---
+
+(2pts) Complete the line of code below to remove it, using what we did before as a guide:
+```{r}
+
+iso.data.clean2 <- 
+
+  
+```
+
+```{r}
+# Now plot the histogram:
+
+hist(iso.data.clean2$`corrected d15N (Air)`)
+
+# (1pt) What kind of distribution do we have now? Is it right skewed, left skewed, bimodal, or normal?
+# 
+  
+```
+
+
+
+---
+
+Now we will plot the dataset with our two outliers removed. You can see the error bars more clearly on this plot.
+```{r}
+
+ggplot(data=iso.data.clean2, aes(x=`corrected d13C (VPDB)`, y=`corrected d15N (Air)`, color=Trophic)) + 
+  geom_errorbar(aes(ymin=(`corrected d15N (Air)`-0.09), ymax=(`corrected d15N (Air)`+0.09))) + 
+  geom_errorbarh(aes(xmin=(`corrected d13C (VPDB)`-0.11), xmax=(`corrected d13C (VPDB)`+0.11))) + 
+  geom_point() + theme_bw() +
+  geom_text(aes(label=ID, hjust=0.5), check_overlap = FALSE, hjust = 0, nudge_x = 0.2) + xlim(-30,-17) +
+  scale_color_viridis_d(name="Trophic Position", 
+                        breaks=c("Apex", "Sec Consumer", "Herbivore", "Detritivore", "HerbivoreDetritivore", "Primary Producer", "Detritus"))
+
+```
+
+(1pt) Describe what you see in the new plot of the community. Which group together and which don't?
+
+
+
+---
+
+Now we can run analyses
+```{r}
+
+# This line scales the data so that they're comparable
+iso.scaled <- scale(iso.data.clean2[,c(5:6)])
+
+# We set the rownames to be the trophic level we think each sample belongs to.
+rownames(iso.scaled) <- iso.data.clean2$Trophic
+
+# You can find out the class of any object in your environment using the command class(name.of.object)
+# For example, the command class(iso.data.clean2) tells us that iso.data.clean2 is a data frame.
+
+# (1pt) On the line below, write the command to find the class of iso.scaled and run it.
+
+
+
+```
+
+
+---
+
+Now we can calculate the Euclidean distance of each sample in our community
+```{r}
+
+distance <- get_dist(iso.scaled)
+
+# Next, we plot the distances on a pairwise matrix
+
+fviz_dist(distance, gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+
+```
+
+(5pts) 
+Take a minute to study and describe this figure in your own words. What is it telling us about the community we sampled? Which trophic levels are most similar to each other? Which are the most different?
+
+
+
+---
+
+(2pts) 
+The only secondary consumer in our dataset is a leech. Some leeches are parasitic, and some are free-living (i.e., are detritivores or herbivores). Look again at the graph above. Which kind of leech did we find? What evidence do you see?
+
+
+---
+
+Now we will perform a cluster analysis
+
+```{r}
+
+# We have begun with two clusters (centers=2) and asked the kmeans function to choose 25 random sets of centers and select the best fit (nstart=25)
+# We've called it k2 to remind ourselves that we picked 2 clusters.
+
+k2 <- kmeans(iso.scaled, centers = 2, nstart = 25)
+fviz_cluster(k2, data = iso.scaled)
+
+```
+
+---
+
+(4pts)
+Try using different numbers of clusters to see how that changes the estimates of the community structure. Using the code above as a guide, try at least two more clusters of your own choosing in the code chunk below. 
+
+Remember to change BOTH the name of the object you create using the kmeans function, and the name of the object you call using the fviz_cluster function.
+
+```{r}
+
+
+
+
+```
+
+
+---
+
+(2pts)
+How many clusters do you think best represent the data? Why? What are the risks of using too many clusters?
+
+
+
+---
+
+(3 extra credit points)
+Bonus question: Go back to the pairwise matrix we created. Which trophic level is most similar to the largest number of other members of the community? What does that tell you about its place in our food web?
+
+---
+
